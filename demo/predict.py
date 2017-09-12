@@ -8,7 +8,7 @@ from keras.preprocessing.image import ImageDataGenerator, array_to_img, load_img
 from keras.preprocessing import image
 from keras.applications import imagenet_utils
 
-#Formato de las imágenes de entrada
+#Formato de las imagenes de entrada
 input_shape=(150, 150, 3)
 
 #Construye un modelo secuencial
@@ -43,18 +43,21 @@ model.load_weights('first_try.h5')  # always save your weights after training or
 
 ### Predict ###
 
-#img_path = 'data/validation/bear/1_90.jpg'
-img_path = 'data/validation/elephant/5688.jpg'
+img_path = 'data/validation/bear/1_90.jpg'
+#img_path = 'data/validation/bear/1_103.jpg'
+#img_path = 'data/validation/elephant/5688.jpg'
+#img_path = 'data/validation/elephant/5698.jpg'
 
 #carga la imagen
 img = image.load_img(img_path, target_size=input_shape)
+
+plt.imshow(img)
+plt.show()
 
 #convertir en arreglo numpy
 x = image.img_to_array(img)
 #print(x[:4,:4,:])
 #print('x array shape', x.shape)
-
-plt.imshow(x)
 
 #normalizar
 x = x/255
@@ -62,7 +65,7 @@ x = x/255
 #expande dimensiones para el modelo
 x = np.expand_dims(x, axis=0)
 
-print('x array expanded dims shape', x.shape)
+#print('x array expanded dims shape', x.shape)
 #print(x[:,:4,:4,:])
 
 #class_indices {'bear': 0, 'elephant': 1}
