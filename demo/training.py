@@ -4,8 +4,10 @@ from keras.layers import Dense, Activation, Dropout, Flatten
 from keras.preprocessing.image import ImageDataGenerator, array_to_img, load_img
 #from keras.applications import imagenet_utils
 
+#Formato de las imágenes de entrada
+input_shape=(150, 150, 3)
 
-
+#Construye un modelo secuencial
 model = Sequential()
 model.add(Conv2D(32, (3, 3), input_shape=(150, 150, 3)))
 model.add(Activation('relu'))
@@ -28,12 +30,13 @@ model.add(Dropout(0.5))
 model.add(Dense(1))
 model.add(Activation('sigmoid'))
 
-model.compile(loss='binary_crossentropy',
+#Compila el modelo
+model.compile(loss='binary_crossentropy', #binario pues solo hay dos clases
               optimizer='rmsprop',
               metrics=['accuracy'])
 
-
-n_epochs = 2
+#Pocas épocas para que ejecute en un CPU
+n_epochs = 2 #se puede incrementar a 100 o más si se tienen varios CUDA Cores
 batch_size = 16
 
 # this is the augmentation configuration we will use for training
@@ -63,10 +66,22 @@ validation_generator = test_datagen.flow_from_directory(
         batch_size=batch_size,
         class_mode='binary')
 
+print(validation_generator)
+
+'''
+for attr, value in validation_generator.__dict__.iteritems():
+        print attr, value
+'''
+
+#Entrena el algoritmo
 model.fit_generator(
         train_generator,
         steps_per_epoch=2000 // batch_size,
         epochs=n_epochs,
         validation_data=validation_generator,
         validation_steps=800 // batch_size)
+
+#Guarda los pesos
 model.save_weights('first_try.h5')  # always save your weights after training or during training
+
+
