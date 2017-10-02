@@ -1,0 +1,62 @@
+docs.nvidia.com/cuda/cuda-installation-guide-linux/#axzz4VZnqTJ2A
+
+Download:
+http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/
+
+sudo dpkg -i cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
+sudo apt-get update
+sudo apt-get install cuda
+
+Solve problem:
+
+sudo apt-get install nvidia-cuda-toolkit
+
+
+https://devtalk.nvidia.com/default/topic/936212/tensorflow-cannot-find-cudnn-ubuntu-16-04-cuda7-5-/?offset=13
+
+CuDNN
+http://askubuntu.com/questions/767269/how-can-i-install-cudnn-on-ubuntu-16-04
+Crearse una cuenta en nvidia
+Descargar cudnn
+copiar y pegar lib64 e includes
+
+$ cd folder/extracted/contents
+$ sudo cp -P include/cudnn.h /usr/include
+$ sudo cp -P lib64/libcudnn* /usr/lib/x86_64-linux-gnu/
+$ sudo chmod a+r /usr/lib/x86_64-linux-gnu/libcudnn*
+
+
+----
+Tensorflow
+
+https://www.tensorflow.org/install/install_linux
+
+----
+Keras
+
+sudo pip install h5py
+pip install pillow
+sudo pip install pillow
+
+sudo apt-get install python-imaging
+sudo -H pip install pillow
+
+
+sudo pip install cython
+sudo apt-get install libhdf5-dev
+sudo pip install h5py
+
+sudo pip install h5py
+
+
+----
+Opcionales:
+cv2
+Keras>=2.0.2
+numpy>=1.12.1
+pandas>=0.19.2
+tqdm>=4.11.2
+matplotlib>=2.0.0
+
+
+

@@ -43,10 +43,12 @@ model.load_weights('first_try.h5')  # always save your weights after training or
 
 ### Predict ###
 
-img_path = 'data/validation/bear/1_90.jpg'
+#img_path = 'data/validation/bear/1_90.jpg'
 #img_path = 'data/validation/bear/1_103.jpg'
 #img_path = 'data/validation/elephant/5688.jpg'
 #img_path = 'data/validation/elephant/5698.jpg'
+#img_path = 'data/bear_smile.jpeg'
+img_path = 'data/elephant_01.jpg'
 
 #carga la imagen
 img = image.load_img(img_path, target_size=input_shape)
