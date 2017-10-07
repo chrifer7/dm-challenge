@@ -13,8 +13,8 @@ from keras.optimizers import SGD
 
 
 IM_WIDTH, IM_HEIGHT = 299, 299 #fixed size for InceptionV3
-NB_EPOCHS = 3
-BAT_SIZE = 32
+NB_EPOCHS = 2
+BAT_SIZE = 32#5000
 FC_SIZE = 1024
 NB_IV3_LAYERS_TO_FREEZE = 172
 
@@ -77,7 +77,8 @@ def train(args):
   nb_val_samples = get_nb_files(args.val_dir)
   nb_epoch = int(args.nb_epoch)
   batch_size = int(args.batch_size)
-
+  print("Batch Size: ", batch_size)
+  # ver: https://machinelearningmastery.com/image-augmentation-deep-learning-keras/
   # data prep
   train_datagen =  ImageDataGenerator(
       preprocessing_function=preprocess_input,
@@ -138,8 +139,8 @@ def train(args):
 
   model.save(args.output_model_file)
 
-  if args.plot:
-    plot_training(history_ft)
+  #if args.plot:
+  plot_training(history_ft)
 
 
 def plot_training(history):
@@ -152,12 +153,14 @@ def plot_training(history):
   plt.plot(epochs, acc, 'r.')
   plt.plot(epochs, val_acc, 'r')
   plt.title('Training and validation accuracy')
+  plt.savefig('accuracy.png')
 
   plt.figure()
   plt.plot(epochs, loss, 'r.')
   plt.plot(epochs, val_loss, 'r-')
   plt.title('Training and validation loss')
-  plt.show()
+  plt.savefig('loss.png')
+  #plt.show()
 
 
 if __name__=="__main__":
