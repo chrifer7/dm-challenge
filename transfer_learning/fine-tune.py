@@ -13,7 +13,7 @@ from keras.optimizers import SGD
 
 
 IM_WIDTH, IM_HEIGHT = 299, 299 #fixed size for InceptionV3
-NB_EPOCHS = 2
+NB_EPOCHS = 10
 BAT_SIZE = 32#5000
 FC_SIZE = 1024
 NB_IV3_LAYERS_TO_FREEZE = 172
@@ -81,19 +81,19 @@ def train(args):
   # ver: https://machinelearningmastery.com/image-augmentation-deep-learning-keras/
   # data prep
   train_datagen =  ImageDataGenerator(
-      #preprocessing_function=preprocess_input,
+      preprocessing_function=preprocess_input,
       rotation_range=30,
-      width_shift_range=0.2,
-      height_shift_range=0.2,
+      #width_shift_range=0.2,
+      #height_shift_range=0.2,
       shear_range=0.2,
       zoom_range=0.2,
       horizontal_flip=True
   )
   test_datagen = ImageDataGenerator(
-      #preprocessing_function=preprocess_input,
+      preprocessing_function=preprocess_input,
       rotation_range=30,
-      width_shift_range=0.2,
-      height_shift_range=0.2,
+      #width_shift_range=0.2,
+      #height_shift_range=0.2,
       shear_range=0.2,
       zoom_range=0.2,
       horizontal_flip=True
@@ -112,7 +112,7 @@ def train(args):
     target_size=(IM_WIDTH, IM_HEIGHT),
     batch_size=batch_size,
     color_mode='rgb',
-    save_to_dir='generated'
+    #save_to_dir='generated'
   )
 
   # setup model
