@@ -81,7 +81,7 @@ def train(args):
   # ver: https://machinelearningmastery.com/image-augmentation-deep-learning-keras/
   # data prep
   train_datagen =  ImageDataGenerator(
-      preprocessing_function=preprocess_input,
+      #preprocessing_function=preprocess_input,
       rotation_range=30,
       width_shift_range=0.2,
       height_shift_range=0.2,
@@ -90,7 +90,7 @@ def train(args):
       horizontal_flip=True
   )
   test_datagen = ImageDataGenerator(
-      preprocessing_function=preprocess_input,
+      #preprocessing_function=preprocess_input,
       rotation_range=30,
       width_shift_range=0.2,
       height_shift_range=0.2,
@@ -103,12 +103,16 @@ def train(args):
     args.train_dir,
     target_size=(IM_WIDTH, IM_HEIGHT),
     batch_size=batch_size,
+    color_mode='rgb',
+    save_to_dir='generated'
   )
 
   validation_generator = test_datagen.flow_from_directory(
     args.val_dir,
     target_size=(IM_WIDTH, IM_HEIGHT),
     batch_size=batch_size,
+    color_mode='rgb',
+    save_to_dir='generated'
   )
 
   # setup model
