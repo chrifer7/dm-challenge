@@ -103,7 +103,7 @@ def train(args):
     args.train_dir,
     target_size=(IM_WIDTH, IM_HEIGHT),
     batch_size=batch_size,
-    color_mode='rgb',
+    #color_mode='rgb',
     save_to_dir='generated'
   )
 
@@ -111,7 +111,7 @@ def train(args):
     args.val_dir,
     target_size=(IM_WIDTH, IM_HEIGHT),
     batch_size=batch_size,
-    color_mode='rgb',
+    #color_mode='rgb',
     #save_to_dir='generated'
   )
 
@@ -122,12 +122,17 @@ def train(args):
   # transfer learning
   setup_to_transfer_learn(model, base_model)
 
+#steps_per_epoch=2, epochs=10, validation_steps=56, class_weight="auto"
+    
   history_tl = model.fit_generator(
     train_generator,
-    nb_epoch=nb_epoch,
-    samples_per_epoch=nb_train_samples,
+    #nb_epoch=nb_epoch,    
+    epochs=nb_epoch,
+    #samples_per_epoch=nb_train_samples,
+    steps_per_epoch=nb_train_samples // batch_size,
     validation_data=validation_generator,
-    nb_val_samples=nb_val_samples,
+    #nb_val_samples=nb_val_samples,
+    validation_steps=nb_val_samples // batch_size,
     class_weight='auto')
 
   # fine-tuning
@@ -135,10 +140,13 @@ def train(args):
 
   history_ft = model.fit_generator(
     train_generator,
-    samples_per_epoch=nb_train_samples,
-    nb_epoch=nb_epoch,
+    #nb_epoch=nb_epoch,    
+    epochs=nb_epoch,
+    #samples_per_epoch=nb_train_samples,
+    steps_per_epoch=nb_train_samples // batch_size,
     validation_data=validation_generator,
-    nb_val_samples=nb_val_samples,
+    #nb_val_samples=nb_val_samples,
+    validation_steps=nb_val_samples // batch_size,
     class_weight='auto')
 
   model.save(args.output_model_file)
