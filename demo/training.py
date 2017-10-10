@@ -3,8 +3,9 @@ from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Dense, Activation, Dropout, Flatten
 from keras.preprocessing.image import ImageDataGenerator, array_to_img, load_img
 #from keras.applications import imagenet_utils
+import matplotlib.pyplot as plt
 
-#Formato de las imágenes de entrada
+#Formato de las imagenes de entrada
 input_shape=(150, 150, 3)
 
 #Construye un modelo secuencial
@@ -35,8 +36,8 @@ model.compile(loss='binary_crossentropy', #binario pues solo hay dos clases
               optimizer='rmsprop',
               metrics=['accuracy'])
 
-#Pocas épocas para que ejecute en un CPU
-n_epochs = 2 #se puede incrementar a 100 o más si se tienen varios CUDA Cores
+#Pocas epocas para que ejecute en un CPU
+n_epochs = 32 #se puede incrementar a 100 o mas si se tienen varios CUDA Cores
 batch_size = 16
 
 # this is the augmentation configuration we will use for training
@@ -74,14 +75,31 @@ for attr, value in validation_generator.__dict__.iteritems():
 '''
 
 #Entrena el algoritmo
-model.fit_generator(
+history_fg = model.fit_generator(
         train_generator,
         steps_per_epoch=2000 // batch_size,
         epochs=n_epochs,
         validation_data=validation_generator,
         validation_steps=800 // batch_size)
 
+
+acc = history_fg.history['acc']
+val_acc = history_fg.history['val_acc']
+loss = history_fg.history['loss']
+val_loss = history_fg.history['val_loss']
+epochs = range(len(acc))
+
+plt.plot(epochs, acc, 'r.')
+plt.plot(epochs, val_acc, 'r')
+plt.title('Training and validation accuracy')
+plt.savefig('accuracy.png')
+
+plt.figure()
+plt.plot(epochs, loss, 'r.')
+plt.plot(epochs, val_loss, 'r-')
+plt.title('Training and validation loss')
+plt.savefig('loss.png')
+
+
 #Guarda los pesos
-model.save_weights('first_try.h5')  # always save your weights after training or during training
-
-
+model.save_weights('_first_try.h5')  # always save your weights after training or during training
