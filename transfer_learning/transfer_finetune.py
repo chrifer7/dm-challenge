@@ -67,7 +67,7 @@ img_width, img_height = 256, 256  # change based on the shape/structure of your 
 # hyper parameters for model
 based_model_last_block_layer_number = 172  # value is based on based model selected.
 batch_size = 64  # try 4, 8, 16, 32, 64, 128, 256 dependent on CPU/GPU memory capacity (powers of 2 values).
-nb_epoch = 50  # number of iteration the algorithm gets trained.
+nb_epoch = 5  # number of iteration the algorithm gets trained.
 learn_rate = 1e-4  # sgd learning rate
 momentum = .9  # sgd momentum to avoid local minimum
 
