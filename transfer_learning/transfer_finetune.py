@@ -62,12 +62,12 @@ tf.set_random_seed(seed=seed)
 # parameters dependent on your dataset: modified to your example
 nb_train_samples = 2000  # Total number of train samples. NOT including augmented images
 nb_validation_samples = 800  # Total number of train samples. NOT including augmented images.
-img_width, img_height = 256, 256  # change based on the shape/structure of your images
+img_width, img_height = 299, 299  # change based on the shape/structure of your images
 
 # hyper parameters for model
 based_model_last_block_layer_number = 172  # value is based on based model selected.
 batch_size = 64  # try 4, 8, 16, 32, 64, 128, 256 dependent on CPU/GPU memory capacity (powers of 2 values).
-nb_epoch = 5  # number of iteration the algorithm gets trained.
+nb_epoch = 32  # number of iteration the algorithm gets trained.
 learn_rate = 1e-4  # sgd learning rate
 momentum = .9  # sgd momentum to avoid local minimum
 
@@ -112,10 +112,10 @@ def train(train_data_dir, validation_data_dir):
     train_generator = train_datagen.flow_from_directory(train_data_dir,
                                                         target_size=(img_height, img_width),
                                                         batch_size=batch_size,
-                                                        class_mode='binary')
-                                                        # save_to_dir=data_dir + '/preview',
-                                                        # save_prefix='aug',
-                                                        # save_format='jpeg')
+                                                        class_mode='binary',#)
+                                                        save_to_dir=data_dir + '/preview',
+                                                        save_prefix='aug',
+                                                        save_format='jpeg')
     # use the above 3 commented lines if you want to save and look at how the data augmentations look like
 
     validation_generator = validation_datagen.flow_from_directory(validation_data_dir,
