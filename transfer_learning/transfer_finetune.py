@@ -67,7 +67,7 @@ img_width, img_height = 299, 299  # change based on the shape/structure of your 
 # hyper parameters for model
 based_model_last_block_layer_number = 172  # value is based on based model selected.
 batch_size = 64  # try 4, 8, 16, 32, 64, 128, 256 dependent on CPU/GPU memory capacity (powers of 2 values).
-nb_epoch = 32  # number of iteration the algorithm gets trained.
+nb_epoch = 100  # number of iteration the algorithm gets trained.
 learn_rate = 1e-4  # sgd learning rate
 momentum = .9  # sgd momentum to avoid local minimum
 
@@ -100,12 +100,12 @@ def train(train_data_dir, validation_data_dir):
     # Read Data and Augment it: Make sure to select augmentations that are appropriate to your images.
     # To save augmentations un-comment save lines and add to your flow parameters.
     train_datagen = ImageDataGenerator(rescale=1. / 255,
-                                       rotation_range=10,
+                                       #rotation_range=10,
                                        shear_range=.1,
                                        zoom_range=.1,
                                        cval=.1,
-                                       horizontal_flip=True,
-                                       vertical_flip=True)
+                                       horizontal_flip=True)
+                                       #vertical_flip=True)
 
     validation_datagen = ImageDataGenerator(rescale=1. / 255)
 
