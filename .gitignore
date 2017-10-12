@@ -1,7 +1,5 @@
 #Deep Learning
 *.model
 *.h5
-*.jpg
 *.zip
-transfer_learning/data/preview
 transfer_learning/data/preview/*
