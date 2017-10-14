@@ -44,7 +44,11 @@ activation function to softmax and replace value of 1 to N, where N represents t
 import sys
 import numpy as np
 import tensorflow as tf
+#import matplotlib.pyplot as plt
+# Generacion del grafico de metricas de Perdidas y Accuracy
+import pandas as pd
 import matplotlib.pyplot as plt
+#ML
 from keras.preprocessing.image import ImageDataGenerator
 from keras.layers import GlobalAveragePooling2D
 from keras.layers import Dropout, Dense
@@ -60,13 +64,13 @@ np.random.seed(seed=seed)
 tf.set_random_seed(seed=seed)
 
 # parameters dependent on your dataset: modified to your example
-nb_train_samples = 2000  # Total number of train samples. NOT including augmented images
-nb_validation_samples = 800  # Total number of train samples. NOT including augmented images.
+nb_train_samples = 690  # Total number of train samples. NOT including augmented images
+nb_validation_samples = 346  # Total number of train samples. NOT including augmented images.
 img_width, img_height = 299, 299  # change based on the shape/structure of your images
 
 # hyper parameters for model
 based_model_last_block_layer_number = 172  # value is based on based model selected.
-batch_size = 64  # try 4, 8, 16, 32, 64, 128, 256 dependent on CPU/GPU memory capacity (powers of 2 values).
+batch_size = 64#8  # try 4, 8, 16, 32, 64, 128, 256 dependent on CPU/GPU memory capacity (powers of 2 values).
 nb_epoch = 100  # number of iteration the algorithm gets trained.
 learn_rate = 1e-4  # sgd learning rate
 momentum = .9  # sgd momentum to avoid local minimum
@@ -112,10 +116,10 @@ def train(train_data_dir, validation_data_dir):
     train_generator = train_datagen.flow_from_directory(train_data_dir,
                                                         target_size=(img_height, img_width),
                                                         batch_size=batch_size,
-                                                        class_mode='binary',#)
-                                                        save_to_dir=data_dir + '/preview',
-                                                        save_prefix='aug',
-                                                        save_format='jpeg')
+                                                        class_mode='binary')
+                                                        #save_to_dir=data_dir + '/preview',
+                                                        #save_prefix='aug',
+                                                        #save_format='jpeg')
     # use the above 3 commented lines if you want to save and look at how the data augmentations look like
 
     validation_generator = validation_datagen.flow_from_directory(validation_data_dir,
@@ -177,14 +181,32 @@ def train(train_data_dir, validation_data_dir):
                         validation_data=validation_generator,
                         nb_val_samples=nb_validation_samples,
                         callbacks=callbacks_list)
-    plot_training(history_ft)
+                        
+    plot_training2(history_ft)
     
     # save model
     model_json = model.to_json()
     with open('model/model.json', 'w') as json_file:
         json_file.write(model_json)
         
-    
+
+def plot_training2(history):
+    #% matplotlib inline
+
+    df = pd.DataFrame(history.history)
+    # display(df)
+
+    plot = df.plot(y=['loss', 'val_loss'], figsize=(8, 4), title='Training and validation loss', legend=True)
+    plot.set_xlabel('Epochs')
+    plot.set_ylabel('Loss binary_crossentropy')    
+    fig = plot.get_figure()
+    fig.savefig('loss_graph_t_cancer_t:'+str(nb_train_samples)+'smp_v:'+str(nb_validation_samples)+'smp_'+str(nb_epoch)+'epc.png')
+
+    plot = df.plot(y=['acc', 'val_acc'], figsize=(8, 4), title='Training and validation accuracy', legend=True)
+    plot.set_xlabel('Epochs')
+    plot.set_ylabel('Accuracy')
+    fig = plot.get_figure()
+    fig.savefig('acc_graph_t_cancer_t:'+str(nb_train_samples)+'smp_v:'+str(nb_validation_samples)+'smp_'+str(nb_epoch)+'epc.png')
 
 def plot_training(history):
     acc = history.history['acc']
