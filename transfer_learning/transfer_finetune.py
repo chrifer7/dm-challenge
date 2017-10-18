@@ -118,7 +118,7 @@ def train(train_data_dir, validation_data_dir):
                                                         batch_size=batch_size,
                                                         class_mode='binary')
                                                         #save_to_dir=data_dir + '/preview',
-                                                        #save_prefix='aug',
+                                                        #save_prefix='aug')#,
                                                         #save_format='jpeg')
     # use the above 3 commented lines if you want to save and look at how the data augmentations look like
 
