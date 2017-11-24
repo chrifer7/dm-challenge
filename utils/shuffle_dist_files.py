@@ -19,7 +19,7 @@ def splitdirs(data_dir, dir1, dir2, ratio):
       files.append(os.path.join(data_dir, filename))
       
     shuffled = files
-    print(shuffled)
+    #print(shuffled)
     random.shuffle(shuffled)
     num = round(len(shuffled) * ratio)
     to_dir1, to_dir2 = shuffled[:num], shuffled[num:]
@@ -27,9 +27,11 @@ def splitdirs(data_dir, dir1, dir2, ratio):
         if not os.path.exists(d):
             os.mkdir(d)
     for file in to_dir1:
-        os.symlink(file, os.path.join(dir1, os.path.basename(file)))
+        #os.symlink(file, os.path.join(dir1, os.path.basename(file)))
+        os.rename(file, os.path.join(dir1, os.path.basename(file)))
     for file in to_dir2:
-        os.symlink(file, os.path.join(dir2, os.path.basename(file)))
+        #os.symlink(file, os.path.join(dir2, os.path.basename(file)))
+        os.rename(file, os.path.join(dir2, os.path.basename(file)))
 
 if __name__ == '__main__':
     if len(sys.argv) != 5:
